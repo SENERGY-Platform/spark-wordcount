@@ -67,7 +67,7 @@ public class WordCount {
         //Parse Kafka value to Dataframe (via json)
         Dataset<Row> df = ds.select(functions.from_json(ds.col("value").cast(DataTypes.StringType), schema)
                 .as("data"))
-                .select("data.*");
+                .select("data.analytics.*");
 
         Dataset<String> words = df.as(Encoders.STRING()).flatMap((FlatMapFunction<String, String>) x -> Arrays.asList(x.split("\\W+")).iterator(), Encoders.STRING());
 
